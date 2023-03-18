@@ -21,7 +21,8 @@ public class Cliente {
     @Column(columnDefinition = "varchar(15)")
     private String cedula;
     private String telefono;
-
+    @Column(length = 30)
+    private String Pais;
     @OneToMany(mappedBy = "cliente")
     private List<Direccion> direcciones;
 }
