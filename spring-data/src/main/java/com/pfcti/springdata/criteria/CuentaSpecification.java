@@ -29,24 +29,30 @@ public class CuentaSpecification {
         }
     }
 
+    public <T> Specification<T> isTrue(String fieldName, Boolean fieldValue) {
+        return fieldValue == null ? null :
+                (root, query, criteriaBuilder)
+                        -> criteriaBuilder.isTrue(root.get(fieldName));
+    }
     private Specification<Cuenta> numeroCriteria(CuentaDTO cuentaDto){
 
         return like("numero", cuentaDto.getNumero());
     }
 
     private Specification<Cuenta> tipoCriteria(CuentaDTO cuentaDto){
+
         return like("tipo", cuentaDto.getTipo());
     }
 
     private Specification<Cuenta> estadoCriteria(CuentaDTO cuentaDto){
-        return like("estado", cuentaDto.getEstado().toString());
+        return isTrue("estado", cuentaDto.getEstado());
     }
 
     public Specification<Cuenta> buildFilter(CuentaDTO cuentaDto){
         System.out.println("Terms of Criteria:" + cuentaDto);
         return Specification
                 .where(numeroCriteria(cuentaDto))
-                .and(tipoCriteria(cuentaDto))
-                .and(estadoCriteria(cuentaDto));
+                .and(estadoCriteria(cuentaDto))
+                .and(tipoCriteria(cuentaDto));
     }
 }

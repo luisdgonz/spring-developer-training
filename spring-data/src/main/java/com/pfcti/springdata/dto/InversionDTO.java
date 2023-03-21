@@ -7,4 +7,5 @@ public class InversionDTO {
     private int id;
     private String numero;
     private String tipo;
+    private Boolean estado;
 }
