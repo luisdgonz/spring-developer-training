@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface InversionRepository extends JpaRepository<Inversion,Integer> {
+
+    void deleteAllByCliente_Id(int clientId);
 }

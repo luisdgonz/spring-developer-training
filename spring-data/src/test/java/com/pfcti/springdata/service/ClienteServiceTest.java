@@ -4,6 +4,7 @@ import com.pfcti.springdata.dto.ClienteDTO;
 import com.pfcti.springdata.model.Cliente;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Tuple;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,5 +79,37 @@ class ClienteServiceTest {
         System.out.println(clienteDtoBaseUpdated);
         assertEquals("ROBERTOTEST", clienteDtoBaseUpdated.getNombre());
         assertEquals("PEREZTEST", clienteDtoBaseUpdated.getApellidos());
+    }
+
+    @Test
+    void obtenerClientesPorCodigoISOPaisYCuentasActivas() {
+        List<ClienteDTO> clientesDto = clienteService.obtenerClientesPorCodigoISOPaisYCuentasActivas("CR");
+        clientesDto.forEach(clienteDto -> {System.out.println("Cuentas Activas" + clienteDto);});
+        assertEquals(2, clientesDto.size());
+    }
+
+    @Test
+    void buscarClientesPorApellido(){
+
+        List<Cliente> clientesDto = clienteService.buscarPorApellido("PEREZ");
+        clientesDto.forEach(clienteDto -> {System.out.println("Apellidos" + clienteDto);});
+        assertEquals(1, clientesDto.size());
+    }
+
+    @Test
+    void obtenerClientesPorCodigoISOPaisYTarjetasInactivas() {
+        List<ClienteDTO> clientesDto = clienteService.obtenerClientesPorCodigoISOPaisYTarjetasInactivas("CR");
+        clientesDto.forEach(clienteDto -> {System.out.println("Cuentas Inactivas" + clienteDto);});
+        assertEquals(1, clientesDto.size());
+    }
+
+    @Test
+    void buscarClientesDinamicamentePorCriterio() {
+        ClienteDTO clienteDto = new ClienteDTO();
+        clienteDto.setApellidos("SANCHEZ");
+        clienteDto.setNombre("RAUL");
+        List<ClienteDTO> resultadoCriteriosConDatosDTO = clienteService.buscarClientesDinamicamentePorCriterio(clienteDto);
+        resultadoCriteriosConDatosDTO.forEach(clienteDtoResultado -> {System.out.println("ClienteDto es:"+ clienteDtoResultado);});
+        assertEquals(1,resultadoCriteriosConDatosDTO.size());
     }
 }

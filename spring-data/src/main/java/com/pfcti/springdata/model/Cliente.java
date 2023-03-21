@@ -22,7 +22,16 @@ public class Cliente {
     private String cedula;
     private String telefono;
     @Column(length = 30)
-    private String Pais;
+    private String paisNacimiento;
     @OneToMany(mappedBy = "cliente")
     private List<Direccion> direcciones;
+
+    @OneToMany(mappedBy = "cliente")
+    private List<Cuenta> cuentas;
+
+    @OneToMany(mappedBy = "cliente")
+    private List<Tarjeta> tarjetas;
+
+    @OneToMany(mappedBy = "cliente")
+    private List<Inversion> inversiones;
 }

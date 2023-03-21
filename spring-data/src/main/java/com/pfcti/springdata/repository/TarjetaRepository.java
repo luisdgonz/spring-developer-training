@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TarjetaRepository extends JpaRepository<Tarjeta,Integer> {
+
+    void deleteAllByCliente_Id(int clientId);
 }
