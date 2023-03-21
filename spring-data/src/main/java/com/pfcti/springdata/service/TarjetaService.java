@@ -19,6 +19,8 @@ public class TarjetaService {
         tarjetaDTO.setId(tarjeta.getId());
         tarjetaDTO.setTipo(tarjeta.getTipo());
         tarjetaDTO.setNumero(tarjeta.getNumero());
+        tarjeta.setEstado(estado);
+        tarjetaRepository.save(tarjeta);
         return tarjetaDTO;
     }
 }
