@@ -21,5 +21,6 @@ class TarjetaServiceTest {
         System.out.println("Numero: " + tarjetaDTO.getNumero());
         System.out.println("Estado: " + tarjetaDTO.getEstado());
         System.out.println("Tipo: " + tarjetaDTO.getTipo());
+        assertEquals(true,tarjetaDTO.getEstado());
     }
 }
