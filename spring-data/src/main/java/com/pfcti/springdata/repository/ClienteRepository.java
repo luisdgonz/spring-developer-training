@@ -1,5 +1,6 @@
 package com.pfcti.springdata.repository;
 
+import com.pfcti.springdata.dto.ProductosDTO;
 import com.pfcti.springdata.model.Cliente;
 import jakarta.persistence.Tuple;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,4 +22,6 @@ public interface ClienteRepository extends JpaRepository<Cliente,Integer>, JpaSp
     List<Tuple>  buscarPorApellidosNativo(String apellidos);
 
     List<Cliente> findClientesByPaisNacimientoNotContainsAndTarjetas_EstadoIsFalse(String paisNacimiento);
+
+
 }

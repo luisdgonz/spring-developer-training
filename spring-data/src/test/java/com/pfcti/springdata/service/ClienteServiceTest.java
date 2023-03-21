@@ -1,6 +1,7 @@
 package com.pfcti.springdata.service;
 
 import com.pfcti.springdata.dto.ClienteDTO;
+import com.pfcti.springdata.dto.ProductosDTO;
 import com.pfcti.springdata.model.Cliente;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -111,5 +112,14 @@ class ClienteServiceTest {
         List<ClienteDTO> resultadoCriteriosConDatosDTO = clienteService.buscarClientesDinamicamentePorCriterio(clienteDto);
         resultadoCriteriosConDatosDTO.forEach(clienteDtoResultado -> {System.out.println("ClienteDto es:"+ clienteDtoResultado);});
         assertEquals(1,resultadoCriteriosConDatosDTO.size());
+    }
+
+    @Test
+    void obtenerProductosPorCliente() {
+        ProductosDTO productos = clienteService.obtenerProductosPorCliente(1);
+        productos.getCuentas().forEach(productosDTO -> {System.out.println("Cuentas " + productosDTO);});
+        productos.getTarjetas().forEach(productosDTO -> {System.out.println("Tarjetas " + productosDTO);});
+        productos.getInversiones().forEach(productosDTO -> {System.out.println("Inversiones " + productosDTO);});
+        assertEquals(1, productos.getCuentas().size());
     }
 }

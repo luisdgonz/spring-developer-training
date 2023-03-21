@@ -1,8 +1,11 @@
 package com.pfcti.springdata.service;
 
 import com.pfcti.springdata.criteria.ClienteSpecification;
-import com.pfcti.springdata.dto.ClienteDTO;
+import com.pfcti.springdata.dto.*;
 import com.pfcti.springdata.model.Cliente;
+import com.pfcti.springdata.model.Cuenta;
+import com.pfcti.springdata.model.Inversion;
+import com.pfcti.springdata.model.Tarjeta;
 import com.pfcti.springdata.repository.*;
 import jakarta.persistence.Tuple;
 import jakarta.transaction.Transactional;
@@ -123,4 +126,50 @@ public class ClienteService {
         return clienteDto;
     }
 
+    private TarjetaDTO fromTarjetaToDto(Tarjeta tarjeta){
+        TarjetaDTO tarjetaDto = new TarjetaDTO();
+        BeanUtils.copyProperties(tarjeta, tarjetaDto);
+        return tarjetaDto;
+    }
+
+    private InversionDTO fromInversionToDto(Inversion inversion){
+        InversionDTO inversionDTO = new InversionDTO();
+        BeanUtils.copyProperties(inversion, inversionDTO);
+        return inversionDTO;
+    }
+
+    private CuentaDTO fromCuentaToDto(Cuenta cuenta){
+        CuentaDTO cuentaDTO = new CuentaDTO();
+        BeanUtils.copyProperties(cuenta, cuentaDTO);
+        return cuentaDTO;
+    }
+
+    public ProductosDTO obtenerProductosPorCliente(Integer id){
+        ProductosDTO productosDTO = new ProductosDTO();
+        List<TarjetaDTO> tarjetas = new ArrayList<>();
+        tarjetaRepository.findTarjetasByCliente_IdAndEstadoIsTrue(id).forEach(tarjeta -> {
+            TarjetaDTO tarjetaDTO;
+            tarjetaDTO = fromTarjetaToDto(tarjeta);
+            tarjetas.add(tarjetaDTO);
+        });
+        productosDTO.setTarjetas(tarjetas);
+
+        List<InversionDTO> inversiones = new ArrayList<>();
+        inversionRepository.findInversionsByCliente_IdAndEstadoIsTrue(id).forEach(inversion -> {
+            InversionDTO inversionDTO;
+            inversionDTO = fromInversionToDto(inversion);
+            inversiones.add(inversionDTO);
+        });
+        productosDTO.setInversiones(inversiones);
+
+        List<CuentaDTO> cuentas = new ArrayList<>();
+        cuentaRepository.findCuentasByCliente_IdAndEstadoIsTrue(id).forEach(cuenta -> {
+            CuentaDTO cuentaDTO;
+            cuentaDTO = fromCuentaToDto(cuenta);
+            cuentas.add(cuentaDTO);
+        });
+        productosDTO.setCuentas(cuentas);
+
+        return productosDTO;
+    }
 }
