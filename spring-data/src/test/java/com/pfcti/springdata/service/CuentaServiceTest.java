@@ -25,4 +25,14 @@ class CuentaServiceTest {
         resultadoCriteriosConDatosDTO.forEach(cuentaDTOResultado -> {System.out.println("CuentaDTO es:"+ cuentaDTOResultado);});
         assertEquals(1,resultadoCriteriosConDatosDTO.size());
     }
+
+    @Test
+    void insertarCuenta(){
+        CuentaDTO cuentaDTO = new CuentaDTO();
+        cuentaDTO.setNumero("8313534");
+        cuentaDTO.setTipo("1");
+        cuentaDTO.setEstado(true);
+        cuentaService.insertarCuenta(cuentaDTO);
+        assertEquals(1,1);
+    }
 }

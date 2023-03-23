@@ -1,35 +1,27 @@
-package com.pfcti.springdata.springbeans;
+package com.pfcti.springdata.springbeans.business.impl;
 
 import com.pfcti.springdata.dto.ClienteDTO;
 import com.pfcti.springdata.model.Cliente;
 import com.pfcti.springdata.repository.ClienteRepository;
+import com.pfcti.springdata.springbeans.business.BuscadorClientes;
 import com.pfcti.springdata.springbeans.dto.ClienteQueryDto;
 import com.pfcti.springdata.springbeans.dto.ClienteQueryType;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class AdministradorClientes {
+@Service("baseDeDatos")
+public class BuscadorClientesBdd implements BuscadorClientes {
+    @Autowired
     private ClienteRepository clienteRepository;
-
     private ClienteQueryType defaultClienteQueryType;
-    public AdministradorClientes(ClienteRepository clienteRepository, ClienteQueryType defaultClienteQueryType) {
-        System.out.println("Inicializando constructor AdministradorClientes " + this);
-        this.clienteRepository = clienteRepository;
-        this.defaultClienteQueryType = defaultClienteQueryType;
-    }
-
-   /* public AdministradorClientes(ClienteQueryType defaultClienteQueryType) {
-        this.defaultClienteQueryType = defaultClienteQueryType;
-    }*/
-
-    public void setClienteRepository(ClienteRepository clienteRepository) {
-        this.clienteRepository = clienteRepository;
-    }
-
-    public List<ClienteDTO> obtenerListaClientesPorCriterio(ClienteQueryDto clienteQueryDto) {
+    @Override
+    public List<ClienteDTO> obtenerListaClientes(ClienteQueryDto clienteQueryDto) {
+        List<ClienteDTO> resultadoClientes = new ArrayList<>();
         List<Cliente> clientes = null;
         if (clienteQueryDto.getTipoBusqueda() == null) {
             clienteQueryDto.setTipoBusqueda(defaultClienteQueryType);

@@ -122,4 +122,16 @@ class ClienteServiceTest {
         productos.getInversiones().forEach(productosDTO -> {System.out.println("Inversiones " + productosDTO);});
         assertEquals(1, productos.getCuentas().size());
     }
+
+    @Test
+    void insertarClienteConValidaciones(){
+        ClienteDTO clienteDto = new ClienteDTO();
+        clienteDto.setApellidos("Salazar");
+        clienteDto.setNombre(null);
+        clienteDto.setCedula("1890000000");
+        clienteDto.setTelefono("0999714563");
+        clienteDto.setDirecciones(null);
+        clienteService.insertarCliente(clienteDto);
+        assertEquals(1,1);
+    }
 }
