@@ -5,10 +5,12 @@ import com.pfcti.springdata.dto.TarjetaDTO;
 import com.pfcti.springdata.model.Tarjeta;
 import com.pfcti.springdata.repository.TarjetaRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class TarjetaService {
     private TarjetaRepository tarjetaRepository;
 

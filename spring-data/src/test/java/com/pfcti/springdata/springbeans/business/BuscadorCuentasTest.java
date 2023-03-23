@@ -42,4 +42,18 @@ class BuscadorCuentasTest {
 
         buscadorCuentas.obtenerListaCuentas(cuentaQueryDto);
     }
+
+    @Test
+    void buscarCuentasPorClienteBdd() {
+        List<CuentaDTO> resultado = baseDeDatosCuentas.buscarCuentasPorCliente(1);
+        resultado.forEach(cuentaDto -> System.out.println("Cuenta de cliente: "+ cuentaDto));
+        Assertions.assertEquals(2, resultado.size());
+    }
+
+    @Test
+    void buscarCuentasPorClienteSistemaExterno() {
+        List<CuentaDTO> resultado = buscadorCuentas.buscarCuentasPorCliente(1);
+        resultado.forEach(cuentaDto -> System.out.println("Cuenta de cliente: "+ cuentaDto));
+        Assertions.assertEquals(1, resultado.size());
+    }
 }

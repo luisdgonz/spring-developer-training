@@ -19,4 +19,15 @@ public class BuscadorCuentasSistemaExterno implements BuscadorCuentas {
         System.out.println("sistemaExterno");
         return null;
     }
+
+    @Override
+    public List<CuentaDTO> buscarCuentasPorCliente(int idCliente) {
+        CuentaDTO cuentaDto = new CuentaDTO();
+        cuentaDto.setId(1);
+        cuentaDto.setId(1);
+        cuentaDto.setEstado(true);
+        cuentaDto.setNumero("123123213231212");
+        cuentaDto.setTipo("VISA");
+        return List.of(cuentaDto);
+    }
 }

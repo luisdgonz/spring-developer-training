@@ -9,4 +9,6 @@ import java.util.List;
 
 public interface BuscadorCuentas {
     List<CuentaDTO> obtenerListaCuentas(CuentaQueryDto cuentaQueryDto);
+
+    List<CuentaDTO> buscarCuentasPorCliente(int idCliente);
 }

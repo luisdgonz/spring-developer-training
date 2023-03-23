@@ -6,6 +6,7 @@ import com.pfcti.springdata.model.Cliente;
 import com.pfcti.springdata.model.Cuenta;
 import com.pfcti.springdata.repository.ClienteRepository;
 import com.pfcti.springdata.repository.CuentaRepository;
+import com.pfcti.springdata.service.CuentaService;
 import com.pfcti.springdata.springbeans.business.BuscadorClientes;
 import com.pfcti.springdata.springbeans.business.BuscadorCuentas;
 import com.pfcti.springdata.springbeans.dto.ClienteQueryDto;
@@ -25,6 +26,9 @@ public class BuscadorCuentasBdd implements BuscadorCuentas {
     @Autowired
     private CuentaRepository cuentaRepository;
     private CuentaQueryType defaultCuentaQueryType;
+
+    @Autowired
+    private CuentaService cuentaService;
     @Override
     public List<CuentaDTO> obtenerListaCuentas(CuentaQueryDto cuentaQueryDto) {
         List<CuentaDTO> resultadoCuentas = new ArrayList<>();
@@ -44,5 +48,10 @@ public class BuscadorCuentasBdd implements BuscadorCuentas {
             cuentaDTO.setEstado(cuenta.getEstado());
             return cuentaDTO;
         }).collect(Collectors.toList())).orElse(new ArrayList<>());
+    }
+
+    @Override
+    public List<CuentaDTO> buscarCuentasPorCliente(int idCliente) {
+        return cuentaService.buscarCuentasPorCliente(idCliente);
     }
 }
