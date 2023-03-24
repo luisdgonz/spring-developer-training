@@ -174,4 +174,17 @@ public class ClienteService {
 
         return productosDTO;
     }
+
+    public List<ClienteDTO> listarTodosLosClientes(){
+        List<ClienteDTO> clienteDtoList = new ArrayList<>();
+        clienteRepository
+                .findAll()
+                .stream()
+                .map(cliente -> {
+                    clienteDtoList.add(fromClienteToDto(cliente));
+                    return cliente;
+                })
+                .collect(Collectors.toList());
+        return clienteDtoList;
+    }
 }
