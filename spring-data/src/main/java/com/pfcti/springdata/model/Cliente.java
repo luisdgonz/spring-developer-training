@@ -16,7 +16,7 @@ public class Cliente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "nombre")
-    @NotNull(message = "Name cannot be null")
+    @NotNull
     private String nombre;
     @Column(length = 30)
     private String apellidos;
