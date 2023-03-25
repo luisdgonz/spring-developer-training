@@ -10,5 +10,5 @@ public class CuentaDTO {
     private String tipo;
     private Boolean estado;
 
-    private int idCliente;
+    //private int clientId;
 }
