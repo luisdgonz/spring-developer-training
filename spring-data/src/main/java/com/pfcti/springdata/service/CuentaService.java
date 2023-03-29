@@ -6,11 +6,16 @@ import com.pfcti.springdata.dto.CuentaDTO;
 import com.pfcti.springdata.model.Cliente;
 import com.pfcti.springdata.model.Cuenta;
 import com.pfcti.springdata.repository.*;
+import com.pfcti.springdata.springjms.dto.NotificationDto;
+import com.pfcti.springdata.springjms.pubsub.publishers.NotificationPubSubSender;
+import com.pfcti.springdata.springjms.senders.NoticationSender;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.messaging.Message;
+import org.springframework.integration.support.MessageBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +28,12 @@ import java.util.stream.Collectors;
 public class CuentaService {
     private CuentaRepository cuentaRepository;
     private CuentaSpecification cuentaSpecification;
+
+    private NoticationSender noticationSender;
+
+    private ClienteService clienteService;
+
+    private NotificationPubSubSender notificationPubSubSender;
 
     public List<CuentaDTO> buscarCuentasDinamicamentePorCriterio(CuentaDTO cuentaDtoFilter){
         return cuentaRepository.findAll(cuentaSpecification.buildFilter(cuentaDtoFilter))
@@ -39,8 +50,20 @@ public class CuentaService {
         Cuenta cuenta = new Cuenta();
         cuenta.setNumero(cuentaDTO.getNumero());
         cuenta.setTipo(cuentaDTO.getTipo());
-        cuenta.setEstado(cuentaDTO.getEstado());
+        cuenta.setEstado(cuentaDTO.getEstado());//(cuentaDTO.getClientId());
         cuentaRepository.save(cuenta);
+        this.enviarNotificacion(cuentaDTO);
+    }
+
+    private void enviarNotificacion(CuentaDTO cuentaDto){
+        log.info("Preparo notificacion");
+        NotificationDto noticationDto = new NotificationDto();
+        ClienteDTO clienteDto = clienteService.obtenerCliente(cuentaDto.getClientId());
+        noticationDto.setPhoneNumber(clienteDto.getTelefono());
+        noticationDto.setMailBody("Estimado " + clienteDto.getNombre() + "tu cuenta fue creada");
+        noticationSender.sendSms(noticationDto);
+        Message<CuentaDTO> message = MessageBuilder.withPayload(cuentaDto).build();
+        notificationPubSubSender.sendNotification(message);
     }
 
     public List<CuentaDTO> buscarCuentasPorCliente(int idCliente) {
