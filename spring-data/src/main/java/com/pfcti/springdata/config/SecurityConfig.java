@@ -1,5 +1,6 @@
 package com.pfcti.springdata.config;
 
+import com.pfcti.springdata.config.CustomJwtAuthenticationConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -43,7 +44,8 @@ public class SecurityConfig {
                 .and()
                 //.httpBasic();
                 .oauth2ResourceServer()
-                .jwt();
+                .jwt()
+                .jwtAuthenticationConverter(new CustomJwtAuthenticationConverter());
         http.oauth2Login();
         return http.build();
     }

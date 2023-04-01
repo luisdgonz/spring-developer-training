@@ -68,6 +68,7 @@ dependencies {
 	implementation 'org.springframework.security:spring-security-test'
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'wsdl4j:wsdl4j'
 	implementation 'junit:junit:4.13.1'
 	jaxb("org.glassfish.jaxb:jaxb-xjc")
